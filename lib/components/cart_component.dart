@@ -42,92 +42,80 @@ class _CartComponentState extends State<CartComponent> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-      child: Row(
-        children: [
-          Image.network(
-            widget.imagePath,
-            width: 100,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 6),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+        leading: Image.network(
+          widget.imagePath,
+        ),
+        title: Text(
+          widget.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 15,
           ),
-          const Gap(10),
-          SizedBox(
-            width: size.width / 1.66,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        subtitle: Row(
+          children: [
+            Text(
+              '\$${widget.price}',
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Gap(10),
+            Row(
               children: [
-                Text(
-                  widget.title,
-                  softWrap: true,
-                  maxLines: 2,
-                  style: const TextStyle(
-                    fontSize: 15.5,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _quantity++;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[200],
+                    ),
+                    child: const Icon(Icons.add_rounded),
                   ),
                 ),
-                const Gap(12),
-                Row(
-                  children: [
-                    Text(
-                      '\$${widget.price}',
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Gap(30),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _quantity++;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey[200],
-                            ),
-                            child: const Icon(Icons.add_rounded),
-                          ),
-                        ),
-                        const Gap(15),
-                        Text(
-                          '${_quantity < 10 ? '0$_quantity' : _quantity}',
-                          style: const TextStyle(fontSize: 17),
-                        ),
-                        const Gap(15),
-                        GestureDetector(
-                          onTap: () {
-                            if (_quantity == 1) return;
+                const Gap(10),
+                Text(
+                  '${_quantity < 10 ? '0$_quantity' : _quantity}',
+                  style: const TextStyle(fontSize: 17),
+                ),
+                const Gap(10),
+                GestureDetector(
+                  onTap: () {
+                    if (_quantity == 1) return;
 
-                            setState(() {
-                              _quantity--;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey[200],
-                            ),
-                            child: const Icon(Icons.remove_rounded),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                    setState(() {
+                      _quantity--;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[200],
+                    ),
+                    child: const Icon(Icons.remove_rounded),
+                  ),
                 )
               ],
-            ),
+            )
+          ],
+        ),
+        trailing: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.delete_rounded,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.delete_rounded,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
