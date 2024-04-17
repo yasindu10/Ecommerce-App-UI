@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 
 class CartComponent extends StatefulWidget {
   final String imagePath;
   final String title;
   String price;
+  int onePrice;
 
   CartComponent({
     super.key,
     required this.imagePath,
     required this.title,
     required this.price,
+    required this.onePrice,
   });
 
   @override
@@ -22,13 +22,12 @@ class CartComponent extends StatefulWidget {
 class _CartComponentState extends State<CartComponent> {
   int _quantity = 1;
 
-  // void changePrice() {
-  //   widget.price = _quantity * widget.price;
-  // }
+  void changePrice() {
+    widget.price = (widget.onePrice * _quantity).toString();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         boxShadow: const [
@@ -70,9 +69,12 @@ class _CartComponentState extends State<CartComponent> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    if (_quantity == 20) return;
+
                     setState(() {
                       _quantity++;
                     });
+                    changePrice();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(1),
@@ -96,6 +98,7 @@ class _CartComponentState extends State<CartComponent> {
                     setState(() {
                       _quantity--;
                     });
+                    changePrice();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(1),
